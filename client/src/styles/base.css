@@ -21,7 +21,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.cats {
+.box {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+.cat {
+  display: grid;
   border-bottom: 1px solid gray;
   border-top: 1pc solid gray;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+label,
+input,
+textarea {
+  display: block;
 }

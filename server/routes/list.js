@@ -19,15 +19,34 @@ router.get("/categories", (req, res, next) => {
     res.json(categories)
   })
 })
+router.get("/category/:id", (req, res, next) => {
+  const id = req.params.id
+  const sql =
+    "SELECT p.id, p.name, p.posting, p.time_created FROM posts p LEFT JOIN categories c ON p.category_id = c.parent.id WHERE c.id = ?"
 
-router.post("/post", (req, res, next) => {
-  const sql = `INSERT * INTO post`
-  const posting_title = req.body.posting_title
-  const description = req.body.description
-  conn.query(sql, (err, results, fields) => {
-    const data = results
-  })
-
-  res.json()
+  conn.query(
+    "SELECT name FROM categories WHERE id = ?",
+    [id],
+    (err1, results1, fields1) => {
+      conn.query(sql, [id], (err, results, fields) => {
+        const categoryName = results1[0].name
+        res.json({
+          catName: categoryName,
+          post: results
+        })
+      })
+    }
+  )
 })
+
+// router.post("/post", (req, res, next) => {
+//   const sql = `INSERT * INTO post`
+//   const posting = req.body.posting
+//   const description = req.body.description
+//   conn.query(sql, (err, results, fields) => {
+//     const data = results
+//   })
+
+//   res.json()
+// })
 module.exports = router
