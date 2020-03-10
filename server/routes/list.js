@@ -22,21 +22,28 @@ router.get("/categories", (req, res, next) => {
 router.get("/category/:id", (req, res, next) => {
   const id = req.params.id
   const sql =
-    "SELECT p.id, p.name, p.posting, p.time_created FROM posts p LEFT JOIN categories c ON p.category_id = c.parent.id WHERE c.id = ?"
+    "SELECT p.id, p.name, p.posting, p.time_created FROM posts p LEFT JOIN categories c ON p.category_id = c.id WHERE c.id = ?"
 
-  conn.query(
-    "SELECT name FROM categories WHERE id = ?",
-    [id],
-    (err1, results1, fields1) => {
-      conn.query(sql, [id], (err, results, fields) => {
-        const categoryName = results1[0].name
-        res.json({
-          catName: categoryName,
-          post: results
-        })
+  conn.query(sql, [id], (err, results, fields) => {
+    if (results.length) {
+      const categoryName = results[0].name
+      res.json({
+        catName: categoryName,
+        post: results
       })
+    } else {
+      conn.query(
+        "SELECT name FROM categories WHERE id = ?",
+        [id],
+        (err1, results1, fields1) => {
+          res.json({
+            catName: results1[0].name,
+            post: []
+          })
+        }
+      )
     }
-  )
+  })
 })
 
 // router.post("/post", (req, res, next) => {

@@ -11,9 +11,9 @@ export default props => {
       <div>
         <Switch>
           <Route exact path="/" component={Main}></Route>
-          <Route exact path="/Post/:id" component={Post}></Route>
+          <Route exact path="/post/:id" component={Post}></Route>
           <Route exact path="/:id/create" component={CreatePost}></Route>
-          <Route exact path="/Listing/:id" component={Listing}></Route>
+          <Route exact path="/listing/:id" component={Listing}></Route>
         </Switch>
       </div>
     </Router>

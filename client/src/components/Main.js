@@ -28,8 +28,10 @@ export default props => {
       </div>
       <div className="cat">
         {cats.map(cat => (
-          <div className="subcat">
-            <h2>{cat.name}</h2>
+          <div key={"p-c-category-" + cat.id} className="subcat">
+            <h2>
+              <Link to={"/listing/" + cat.id}>{cat.name}</Link>
+            </h2>
             {cat.sub.map(item => (
               <Link key={`subcat-${item.id}`} to={`/listing/${item.id}`}>
                 <h5>{item.name}</h5>

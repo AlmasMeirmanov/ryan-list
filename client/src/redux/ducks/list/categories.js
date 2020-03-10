@@ -29,10 +29,9 @@ export default (state = initialState, action) => {
 function getCurrent(id) {
   return dispatch => {
     axios.get("/api/category/" + id).then(resp => {
-      console.log(resp.data)
       dispatch({
         type: GET_CURRENT,
-        payload: { category: resp.data.catName, post: resp.data }
+        payload: { category: resp.data.catName, post: resp.data.post }
       })
     })
   }
@@ -56,7 +55,7 @@ export function useCats() {
   //const get = () => dispatch(getCategories())
   const getPosts = id => dispatch(getCurrent(id))
   const currentCategory = useSelector(appState => appState.catsState.current)
-  const post = useSelector(appState => appState.catsState.posts)
+  const post = useSelector(appState => appState.catsState.post)
 
   useEffect(() => {
     dispatch(getCats())

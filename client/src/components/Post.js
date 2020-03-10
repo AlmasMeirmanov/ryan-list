@@ -1,14 +1,17 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
+import { usePost } from "../hooks"
 
-// function HandleSubmit(e) {
-//   e.preventDefault()
-//   const [name, setName] = useSate("")
-//   const [desc, setDesc] = useState("")
-// }
 export default props => {
+  const { get, post } = usePost()
+
+  useEffect(() => {
+    get(props.match.params.id)
+  }, [props.match.params])
+
   return (
     <div>
-      <h1>hello</h1>
+      <p>Name: {post.name}</p>
+      <p>Posting: {post.posting}</p>
     </div>
   )
 }
